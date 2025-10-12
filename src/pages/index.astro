@@ -1,16 +1,72 @@
 ---
+import { getCollection } from "astro:content";
 
+const collectionId = "xiiv68slmth2wzb3o1fj4rzw";
+const collection = (await getCollection("collections")).find(
+  (item) => item.id === collectionId,
+);
+if (!collection) throw `unknown collection id "${collectionId}"`;
+
+const artworkIds = new Set(collection.data.artworkIds);
+const artwork = (await getCollection("artwork")).filter((item) =>
+  artworkIds.has(item.id),
+);
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>alysha naples</title>
+  </head>
+  <body>
+    <h1>Test site</h1>
+    {collection.data.title}:
+    <ul>
+      {
+        artwork.map((item) => (
+          <li>
+            {item.data.title} ({item.data.medium || "unknown"})
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="images">
+      {
+        artwork.map((item) => (
+          <figure>
+            <caption>{item.data.title}</caption>
+            {item.data.images.length > 0 ? (
+              <img src={item.data.images[0].url} />
+            ) : null}
+          </figure>
+        ))
+      }
+    </div>
+  </body>
+
+  <style>
+    @import "open-props/style";
+    @import "open-props/normalize";
+
+    body {
+      font-family: var(--font-neo-grotesque);
+    }
+
+    .images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--size-fluid-1);
+      margin: var(--size-fluid-3);
+    }
+    figure {
+      display: flex;
+      flex-direction: column;
+      max-width: 32%;
+      margin: 0;
+      box-shadow: var(--shadow-2);
+    }
+  </style>
 </html>
