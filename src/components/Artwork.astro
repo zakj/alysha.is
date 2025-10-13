@@ -5,12 +5,26 @@ interface Props {
 }
 const { artwork } = Astro.props;
 const image = artwork.data.images[0];
+
+function sizedImageUrl(baseUrl: string, width: number): string {
+  return baseUrl.replace(/fit:\d+:\d+/, `fit:${width}:0`);
+}
+
+function srcset(baseUrl: string, widths: number[]): string {
+  return widths.map((w) => `${sizedImageUrl(baseUrl, w)} ${w}w`).join(",");
+}
+
+// TODO would be nice to have cqw instead of 33vw in sizes
 ---
 
 <img
   src={image.url}
+  srcset={srcset(image.url, [400, 800, 1200, 1600])}
+  sizes="33vw"
   width={image.width}
   height={image.height}
+  loading="lazy"
+  decoding="async"
   alt={artwork.data.title}
 />
 

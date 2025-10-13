@@ -53,9 +53,10 @@ const artwork = (await getCollection("artwork")).filter((item) =>
   }
 
   figure {
+    container-type: inline-size;
     display: flex;
     flex-direction: column;
-    max-width: 32%;
+    flex: 0 1 calc(33.333% - var(--size-fluid-1));
     margin: 0;
     box-shadow: var(--shadow-2);
   }
