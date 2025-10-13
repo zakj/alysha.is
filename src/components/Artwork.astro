@@ -1,0 +1,22 @@
+---
+import type { CollectionEntry } from "astro:content";
+interface Props {
+  artwork: CollectionEntry<"artwork">;
+}
+const { artwork } = Astro.props;
+const image = artwork.data.images[0];
+---
+
+<img
+  src={image.url}
+  width={image.width}
+  height={image.height}
+  alt={artwork.data.title}
+/>
+
+<style>
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+</style>

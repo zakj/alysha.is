@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import Artwork from "../components/Artwork.astro";
 
 const collectionId = "xiiv68slmth2wzb3o1fj4rzw";
 const collection = (await getCollection("collections")).find(
@@ -38,9 +39,7 @@ const artwork = (await getCollection("artwork")).filter((item) =>
         artwork.map((item) => (
           <figure>
             <caption>{item.data.title}</caption>
-            {item.data.images.length > 0 ? (
-              <img src={item.data.images[0].url} />
-            ) : null}
+            <Artwork artwork={item} />
           </figure>
         ))
       }
@@ -60,6 +59,7 @@ const artwork = (await getCollection("artwork")).filter((item) =>
       gap: var(--size-fluid-1);
       margin: var(--size-fluid-3);
     }
+
     figure {
       display: flex;
       flex-direction: column;
