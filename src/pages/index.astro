@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Artwork from "../components/Artwork.astro";
+import Layout from "../layouts/Base.astro";
 
 const collectionId = "xiiv68slmth2wzb3o1fj4rzw";
 const collection = (await getCollection("collections")).find(
@@ -14,58 +15,48 @@ const artwork = (await getCollection("artwork")).filter((item) =>
 );
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <title>alysha naples</title>
-  </head>
-  <body>
-    <h1>Test site</h1>
-    {collection.data.title}:
-    <ul>
-      {
-        artwork.map((item) => (
-          <li>
-            {item.data.title} ({item.data.medium || "unknown"})
-          </li>
-        ))
-      }
-    </ul>
-
-    <div class="images">
-      {
-        artwork.map((item) => (
-          <figure>
-            <caption>{item.data.title}</caption>
-            <Artwork artwork={item} />
-          </figure>
-        ))
-      }
-    </div>
-  </body>
-
-  <style>
-    @import "open-props/normalize";
-
-    body {
-      font-family: var(--font-neo-grotesque);
+<Layout>
+  <h1>Test site</h1>
+  {collection.data.title}:
+  <ul>
+    {
+      artwork.map((item) => (
+        <li>
+          {item.data.title} ({item.data.medium || "unknown"})
+        </li>
+      ))
     }
+  </ul>
 
-    .images {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--size-fluid-1);
-      margin: var(--size-fluid-3);
+  <div class="images">
+    {
+      artwork.map((item) => (
+        <figure>
+          <caption>{item.data.title}</caption>
+          <Artwork artwork={item} />
+        </figure>
+      ))
     }
+  </div>
+</Layout>
 
-    figure {
-      display: flex;
-      flex-direction: column;
-      max-width: 32%;
-      margin: 0;
-      box-shadow: var(--shadow-2);
-    }
-  </style>
-</html>
+<style>
+  body {
+    font-family: var(--font-neo-grotesque);
+  }
+
+  .images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-fluid-1);
+    margin: var(--size-fluid-3);
+  }
+
+  figure {
+    display: flex;
+    flex-direction: column;
+    max-width: 32%;
+    margin: 0;
+    box-shadow: var(--shadow-2);
+  }
+</style>

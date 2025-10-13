@@ -1,0 +1,23 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title = "alysha naples" }: Props = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <style is:global>
+      /* TODO consider whether we want this */
+      /* @import "open-props/normalize"; */
+    </style>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
