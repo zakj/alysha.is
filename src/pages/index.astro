@@ -16,48 +16,44 @@ const artwork = (await getCollection("artwork")).filter((item) =>
 ---
 
 <Layout>
-  <h1>Test site</h1>
-  {collection.data.title}:
-  <ul>
-    {
-      artwork.map((item) => (
-        <li>
-          {item.data.title} ({item.data.medium || "unknown"})
-        </li>
-      ))
-    }
-  </ul>
-
-  <div class="images">
-    {
-      artwork.map((item) => (
-        <figure>
-          <caption>{item.data.title}</caption>
-          <Artwork artwork={item} />
-        </figure>
-      ))
-    }
-  </div>
+  <header></header>
+  <main>
+    <div class="artwork">
+      {
+        artwork.map((item) => (
+          <figure>
+            <Artwork artwork={item} />
+            <figcaption>{item.data.title}</figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </main>
+  <footer></footer>
 </Layout>
 
 <style>
-  body {
-    font-family: var(--font-neo-grotesque);
-  }
-
-  .images {
-    display: flex;
-    flex-wrap: wrap;
+  .artwork {
+    display: grid;
     gap: var(--size-fluid-1);
-    margin: var(--size-fluid-3);
+    grid-template-columns: 100%;
+    @media (width >= 768px) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
   }
 
   figure {
-    container-type: inline-size;
-    display: flex;
-    flex-direction: column;
-    flex: 0 1 calc(33.333% - var(--size-fluid-1));
+    display: grid;
+    grid-template-areas: stack;
     margin: 0;
-    box-shadow: var(--shadow-2);
+    > * {
+      grid-area: stack;
+    }
+    figcaption {
+      font-family: var(--font-geometric-humanist);
+      font-size: var(--font-size-2);
+      padding: var(--size-fluid-1);
+      text-transform: uppercase;
+    }
   }
 </style>

@@ -20,7 +20,7 @@ function srcset(baseUrl: string, widths: number[]): string {
 <img
   src={image.url}
   srcset={srcset(image.url, [400, 800, 1200, 1600])}
-  sizes="33vw"
+  sizes="100cqw, 33vw"
   width={image.width}
   height={image.height}
   loading="lazy"
